@@ -1,0 +1,77 @@
+
+#contact_form .input_item dl dd input[type="text"],
+#contact_form .input_item dl dd input[type="number"],
+#contact_form .input_item dl dd input[type="email"],
+#contact_form .input_item dl dd input[type="tel"]{
+    width: 470px;
+    font-size: 18px;
+    height:30px;
+    padding: 3px 0 3px 10px;
+    margin:0;
+}
+
+#contact_form .input_item .transmission input[type="submit"] {
+    border: 3px double #FFFFFF;
+    background: #F4D4D4;
+    font-size: 25px;
+    text-shadow: none;
+    color: #ffffff;
+    width: 400px;
+    padding: 30px 0;
+    margin: 25px 0;
+    display: block;
+    opacity: 1.0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -ms-transition: 0.5s;
+    transition: 0.5s;
+}
+
+#contact_form .input_item .transmission input[type="submit"]:hover {
+    background: #FF1515;
+    opacity:0.85;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -ms-transition: 0.5s;
+    transition: 0.5s;
+}
+
+#contact_form .input_item dl dd input[type="text"].inp_error,
+#contact_form .input_item dl dd input[type="number"].inp_error,
+#contact_form .input_item dl dd input[type="tel"].inp_error,
+#contact_form .input_item dl dd textarea.inp_error {
+    border: 1px solid #F88A8A;
+    background: #F4D4D4;
+}
+
+#contact_form .input_item dl dd textarea {
+    width: 470px;
+    padding: 10px 3px 10px 10px;
+}
+
+#energy_contact #send_status{
+    padding: 5px 0 25px;
+    text-align: center;
+}
+
+#energy_contact #send_status p{
+    width: 480px;
+    margin: 0 auto;
+    padding: 0 15px;
+    line-height: 50px;
+    font-size: 25px;
+    border: 1px solid #3c763d;
+    border-radius: 4px;
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+span.error_m {
+    font-size: 15px;
+    font-weight: normal;
+    color: #FF4040;
+    display: block;
+    margin: 0;
+}
