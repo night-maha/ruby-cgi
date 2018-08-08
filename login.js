@@ -8,7 +8,6 @@ function frameClick() {
   // 入力内容セット
   var s_password  = $("#s_password").val();
   var s_id  = $("#s_id").val();
-  var url = "http://10.172.81.244:7110/login.cgi";
 
 
   // 入力内容チェック
@@ -38,17 +37,5 @@ function frameClick() {
     var f = document.forms["stu_login"];
       f.method = "POST";
       f.submit();
-    /*
-    var login_data = {
-      "s_id" : s_id,
-      "s_password" : s_password
-    };
-
-    $.post(url, login_data)
-    .done(function(data){
-      console.log(data.form);
-    })
-    document.location.href = url;
-    */
   }
 }

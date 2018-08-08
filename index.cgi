@@ -13,31 +13,29 @@ connection.query("set character set utf8")
 strdata = ""
 stu_id = CGI.escapeHTML(cgi["s_id"])
 stu_pass = CGI.escapeHTML(cgi["s_password"])
-login_id_mysql = connection.query("SELECT password FROM student_info WHERE student_id = #{stu_id}")
-#検索結果の個数（数値型）
-login_id = login_id_mysql.num_rows
-#検索したユーザのパスワード
-login_pass = login_id_mysql.fetch_row
-#login_pass = login_id_mysql.fetch_row.map(&:to_s)
 
-#検索結果によるエラー処理
-if login_id == 0
-	strdata = '<p>学籍番号かパスワードが間違っています</p>'
-elsif login_id == 1
+if !(stu_id.empty? || stu_pass.empty?)
+	login_id_mysql = connection.query("SELECT password FROM student_info WHERE student_id = #{stu_id}")
+	#検索結果の個数（数値型）
+	login_id = login_id_mysql.num_rows
+	#検索したユーザのパスワード
+	login_pass = login_id_mysql.fetch_row
+	#login_pass = login_id_mysql.fetch_row.map(&:to_s)
 
-=begin
-	login_pass_mysql = connection.query("SELECT password FROM student_info WHERE student_id = #{stu_id}")
-	login_pass = login_pass_mysql.fetch_row.map(&:to_s)
-=end
-
-	if login_pass[0] == stu_pass
-		strdata = '<p>OKです</p>'
-	else
+	#検索結果によるエラー処理
+	if login_id == 0
 		strdata = '<p>学籍番号かパスワードが間違っています</p>'
-	end
+	elsif login_id == 1
 
-else
-	strdata = '<p>エラーです、管理者に連絡をしてください</p>'
+		if login_pass[0] == stu_pass
+			strdata = '<p>OKです</p>'
+		else
+			strdata = '<p>学籍番号かパスワードが間違っています</p>'
+		end
+
+	else
+		strdata = '<p>エラーです、管理者に連絡をしてください</p>'
+	end
 end
 
 print <<EOM
@@ -57,6 +55,7 @@ print <<EOM
 			<table border="0">
 				<form name = "stu_login" action="index.cgi" method="post">
 	      	<tr>
+					#{strdata}
 	        	<th>
 	            学籍番号
 	          </th>
