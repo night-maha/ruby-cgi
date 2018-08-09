@@ -1,10 +1,11 @@
 #!/usr/local/bin/ruby
-print "Content-type: text/html\n\n"
 
 #ライブラリ読み込み
 require "cgi"
-cgi = CGI.new
 require 'mysql'
+require 'cgi/session'
+cgi = CGI.new
+session = CGI::Session.new(cgi)
 
 connection = Mysql::connect("localhost" , "m_naito", nil,"m_naito_practice")
 
@@ -13,30 +14,39 @@ connection.query("set character set utf8")
 strdata = ""
 stu_id = CGI.escapeHTML(cgi["s_id"])
 stu_pass = CGI.escapeHTML(cgi["s_password"])
+main_url = "main.cgi"
+teacher_url = "teacher.cgi"
+
 
 if !(stu_id.empty? || stu_pass.empty?)
-	login_id_mysql = connection.query("SELECT password FROM student_info WHERE student_id = #{stu_id}")
-	#検索結果の個数（数値型）
-	login_id = login_id_mysql.num_rows
-	#検索したユーザのパスワード
-	login_pass = login_id_mysql.fetch_row
-	#login_pass = login_id_mysql.fetch_row.map(&:to_s)
-
-	#検索結果によるエラー処理
-	if login_id == 0
-		strdata = '<p>学籍番号かパスワードが間違っています</p>'
-	elsif login_id == 1
-
-		if login_pass[0] == stu_pass
-			strdata = '<p>OKです</p>'
-		else
-			strdata = '<p>学籍番号かパスワードが間違っています</p>'
-		end
-
+	if stu_id == "99999" && stu_pass == "dR951kntq"
+		print cgi.header({"status" => "REDIRECT", "location" => teacher_url})
 	else
-		strdata = '<p>エラーです、管理者に連絡をしてください</p>'
+		login_id_mysql = connection.query("SELECT password FROM student_info WHERE student_id = #{stu_id}")
+		#検索結果の個数（数値型）
+		login_id = login_id_mysql.num_rows
+		#検索したユーザのパスワード
+		login_pass = login_id_mysql.fetch_row
+		#login_pass = login_id_mysql.fetch_row.map(&:to_s)
+
+		#検索結果によるエラー処理
+		if login_id == 0
+			strdata = '<p>学籍番号かパスワードが間違っています</p>'
+		elsif login_id == 1
+
+			if login_pass[0] == stu_pass
+				print cgi.header({"status" => "REDIRECT", "location" => main_url})
+			else
+				strdata = '<p>学籍番号かパスワードが間違っています</p>'
+			end
+
+		else
+			strdata = '<p>エラーです、管理者に連絡をしてください</p>'
+		end
 	end
 end
+
+print "Content-type: text/html\n\n"
 
 print <<EOM
 <!DOCTYPE html>
@@ -66,7 +76,7 @@ print <<EOM
 	        </tr>
 	        <tr>
 	          <th>
-	         		パスワード
+	         		パスワード 2516df1d1d
 	          </th>
 	          <td>
 	            <input type="password" id="s_password" name="s_password" value="" size="24">
@@ -85,5 +95,4 @@ print <<EOM
 </html>
 EOM
 
-#コネクションを閉じる
-connection.close
+session['stu_id_session'] = stu_id
