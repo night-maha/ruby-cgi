@@ -1,3 +1,20 @@
+/*
+function semesterClick() {
+  // 入力内容セット
+  var num_year = document.semester.p_year.selectedIndex;
+  var num_semester = document.semester.p_semester.selectedIndex;
+  var str_year = document.semester.p_year.options[num_year].value;
+  var str_semester = document.semester.p_semester.options[num_semester].value;
+
+    $('form').submit(function(){
+      $.post('test.cgi', `str_year=${str_year}&str_semester=${str_semester}` )
+      .done(function( data ) {
+        console.log( data.form );
+      })
+    })
+}
+*/
+
 function frameClick() {
   var result = true;
 
@@ -32,7 +49,7 @@ function frameClick() {
       result = false;
   }
 
- //想定していた入力だった場合、値をlogin.cgiにPOSTで送る
+ //想定していた入力だった場合、値をindex.cgiにPOSTで送る
   if(result == true){
     var f = document.forms["stu_login"];
       f.method = "POST";
